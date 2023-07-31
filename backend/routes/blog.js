@@ -1,5 +1,4 @@
 import express from 'express';
-import { createError } from '../utils/error.js';
 import {
   createBlog,
   deleteBlog,
@@ -7,15 +6,16 @@ import {
   getBlogs,
   updateBlog,
 } from '../controllers/blogController.js';
+import { verifyAdmin } from '../utils/verifyToken.js';
 
 const router = express.Router();
 
 //CREATE
-router.post('/', createBlog);
+router.post('/', verifyAdmin, createBlog);
 //UPDATE
-router.put('/:id', updateBlog);
+router.put('/:id', verifyAdmin, updateBlog);
 //DELETE
-router.delete('/:id', deleteBlog);
+router.delete('/:id', verifyAdmin, deleteBlog);
 //GET
 router.get('/:id', getBlog);
 //GET ALL
