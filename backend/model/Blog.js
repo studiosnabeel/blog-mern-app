@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const blogSchema = new mongoose.Schema(
   {
@@ -10,7 +10,7 @@ const blogSchema = new mongoose.Schema(
     },
     author: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User', // Reference the User model
+      ref: "User", // Reference the User model
       required: true,
     },
   },
@@ -19,4 +19,4 @@ const blogSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model('Blog', blogSchema);
+export default mongoose.model("Blog", blogSchema);
