@@ -1,8 +1,11 @@
 import Blog from '../model/Blog.js';
 
 export const createBlog = async (req, res, next) => {
-  const newBlog = new Blog(req.body);
-
+  const newBlog = new Blog({
+    title: req.body.title,
+    desc: req.body.desc,
+    author: req.user.id, // Set the author's ID to the authenticated user's ID
+  });
   try {
     const savedBlog = await newBlog.save();
     res.status(200).json(savedBlog);
@@ -27,7 +30,7 @@ export const updateBlog = async (req, res, next) => {
 export const deleteBlog = async (req, res, next) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);
-    res.status(200).json('Hotel has been deleted successfully');
+    res.status(200).json('Blog has been deleted successfully');
   } catch (err) {
     next(err);
   }
