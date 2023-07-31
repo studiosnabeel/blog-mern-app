@@ -8,6 +8,11 @@ const blogSchema = new mongoose.Schema(
     desc: {
       type: String,
     },
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User', // Reference the User model
+      required: true,
+    },
   },
   {
     timestamps: true,
