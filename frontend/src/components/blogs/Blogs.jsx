@@ -1,33 +1,25 @@
 import React from "react";
 import styles from "./blog.module.css";
+import useFetch from "../../hooks/useFetch";
 
 const Blogs = () => {
+  const { data, loading } = useFetch("http://localhost:8000/api/blogs");
+
   return (
     <div className={styles.container}>
-      <div className={styles.blogCards}>
-        <h2>How to JWT authenticaiton in node.js</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet incidunt
-          consequuntur ratione, eaque praesentium vitae aliquam nesciunt sunt
-          eum fugiat?
-        </p>
-      </div>
-      <div className={styles.blogCards}>
-        <h2>How to JWT authenticaiton in node.js</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet incidunt
-          consequuntur ratione, eaque praesentium vitae aliquam nesciunt sunt
-          eum fugiat?
-        </p>
-      </div>
-      <div className={styles.blogCards}>
-        <h2>How to JWT authenticaiton in node.js</h2>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet incidunt
-          consequuntur ratione, eaque praesentium vitae aliquam nesciunt sunt
-          eum fugiat?
-        </p>
-      </div>
+      {loading ? (
+        "loading"
+      ) : (
+        <>
+          {data.map((item) => (
+            <div key={item._id} className={styles.blogCards}>
+              <h2>{item.title}</h2>
+              <p>{item.desc}</p>
+              <h6>Posted on:{item.createdAt}</h6>
+            </div>
+          ))}
+        </>
+      )}
     </div>
   );
 };

@@ -24,9 +24,9 @@ mongoose.connection.on("disconnected", () => {
 });
 
 //Middlewares
+app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors());
 
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
