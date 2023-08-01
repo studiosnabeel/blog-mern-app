@@ -6,6 +6,7 @@ import userRoute from "./routes/user.js";
 import blogRoute from "./routes/blog.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import { verifyToken } from "./utils/verifyToken.js";
 
 dotenv.config();
 const app = express();
@@ -29,8 +30,13 @@ app.use(cookieParser());
 app.use(express.json());
 
 app.use("/api/auth", authRoute);
+// Publicly accessible routes (no verifyToken middleware)
 app.use("/api/user", userRoute);
 app.use("/api/blogs", blogRoute);
+
+// Authenticated routes (apply verifyToken middleware)
+app.use("/api/user", verifyToken, userRoute);
+app.use("/api/blogs", verifyToken, blogRoute);
 
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

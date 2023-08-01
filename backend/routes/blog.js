@@ -1,24 +1,24 @@
-import express from 'express';
+import express from "express";
 import {
   createBlog,
   deleteBlog,
   getBlog,
   getBlogs,
   updateBlog,
-} from '../controllers/blogController.js';
-import { verifyAdmin } from '../utils/verifyToken.js';
+} from "../controllers/blogController.js";
+import { verifyBlogOwner } from "../utils/verifyToken.js";
 
 const router = express.Router();
 
 //CREATE
-router.post('/', verifyAdmin, createBlog);
+router.post("/", createBlog);
 //UPDATE
-router.put('/:id', verifyAdmin, updateBlog);
+router.put("/:id", verifyBlogOwner, updateBlog);
 //DELETE
-router.delete('/:id', verifyAdmin, deleteBlog);
+router.delete("/:id", verifyBlogOwner, deleteBlog);
 //GET
-router.get('/:id', getBlog);
+router.get("/:id", getBlog);
 //GET ALL
-router.get('/', getBlogs);
+router.get("/", getBlogs);
 
 export default router;

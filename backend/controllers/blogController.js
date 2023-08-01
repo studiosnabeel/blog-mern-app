@@ -1,4 +1,5 @@
-import Blog from '../model/Blog.js';
+import Blog from "../model/Blog.js";
+import User from "../model/User.js";
 
 export const createBlog = async (req, res, next) => {
   const newBlog = new Blog({
@@ -8,6 +9,11 @@ export const createBlog = async (req, res, next) => {
   });
   try {
     const savedBlog = await newBlog.save();
+
+    await User.findByIdAndUpdate(req.user.id, {
+      $push: { blogs: savedBlog._id },
+    });
+
     res.status(200).json(savedBlog);
   } catch (err) {
     next(err);
@@ -30,7 +36,7 @@ export const updateBlog = async (req, res, next) => {
 export const deleteBlog = async (req, res, next) => {
   try {
     await Blog.findByIdAndDelete(req.params.id);
-    res.status(200).json('Blog has been deleted successfully');
+    res.status(200).json("Blog has been deleted successfully");
   } catch (err) {
     next(err);
   }

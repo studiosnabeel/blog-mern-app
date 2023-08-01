@@ -1,12 +1,11 @@
-import express from 'express';
-import { createError } from '../utils/error.js';
+import express from "express";
+import { createError } from "../utils/error.js";
 import {
   deleteUser,
   getUser,
   getUsers,
   updateUser,
-} from '../controllers/userController.js';
-import { verifyAdmin, verifyToken, verifyUser } from '../utils/verifyToken.js';
+} from "../controllers/userController.js";
 
 const router = express.Router();
 
@@ -19,12 +18,12 @@ const router = express.Router();
 // });
 
 //UPDATE
-router.put('/:id', verifyUser, updateUser);
+router.put("/:id", updateUser);
 //DELETE
-router.delete('/:id', verifyUser, deleteUser);
+router.delete("/:id", deleteUser);
 //GET
-router.get('/:id', verifyUser, getUser);
+router.get("/:id", getUser);
 //GET ALL
-router.get('/', verifyAdmin, getUsers);
+router.get("/", getUsers);
 
 export default router;
